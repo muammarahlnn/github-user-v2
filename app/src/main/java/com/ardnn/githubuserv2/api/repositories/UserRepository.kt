@@ -1,10 +1,8 @@
 package com.ardnn.githubuserv2.api.repositories
 
 import com.ardnn.githubuserv2.api.callbacks.UserCallback
-import com.ardnn.githubuserv2.api.callbacks.UserFollowersCallback
-import com.ardnn.githubuserv2.api.callbacks.UserFollowingsCallback
-import com.ardnn.githubuserv2.api.responses.UserFollowersResponse
-import com.ardnn.githubuserv2.api.responses.UserFollowingsResponse
+import com.ardnn.githubuserv2.api.callbacks.UserListCallback
+import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.api.services.UserApiServices
 import retrofit2.Call
@@ -24,39 +22,35 @@ object UserRepository {
 
     // method to get user detail
     fun getUserDetail(username: String, callback: UserCallback) {
-        USER_SERVICE.getUserDetail(username).enqueue(object : Callback<UserResponse> {
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body() != null) {
-                        callback.onSuccess(response.body() ?: UserResponse())
+        USER_SERVICE.getUserDetail(username).enqueue(object : Callback<UserDetailResponse> {
+            override fun onResponse(call: Call<UserDetailResponse>, detailResponse: Response<UserDetailResponse>) {
+                if (detailResponse.isSuccessful) {
+                    if (detailResponse.body() != null) {
+                        callback.onSuccess(detailResponse.body() ?: UserDetailResponse())
                     } else {
                         callback.onFailure("response.body() is null")
                     }
                 } else {
-                    callback.onFailure(response.message())
+                    callback.onFailure(detailResponse.message())
                 }
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UserDetailResponse>, t: Throwable) {
                 callback.onFailure(t.localizedMessage ?: "getUserDetail failure")
             }
         })
     }
 
     // method to get user followers
-    fun getUserFollowers(username: String, callback: UserFollowersCallback) {
-        USER_SERVICE.getUserFollowers(username).enqueue(object : Callback<UserFollowersResponse> {
+    fun getUserFollowers(username: String, callback: UserListCallback) {
+        USER_SERVICE.getUserFollowers(username).enqueue(object : Callback<MutableList<UserResponse>> {
             override fun onResponse(
-                call: Call<UserFollowersResponse>,
-                response: Response<UserFollowersResponse>
+                call: Call<MutableList<UserResponse>>,
+                response: Response<MutableList<UserResponse>>
             ) {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        if (response.body()?.followerList != null) {
-                            callback.onSuccess(response.body()?.followerList ?: mutableListOf())
-                        } else {
-                            callback.onFailure("response.body().followerList is null")
-                        }
+                        callback.onSuccess(response.body() ?: mutableListOf())
                     } else {
                         callback.onFailure("response.body() is null")
                     }
@@ -65,25 +59,21 @@ object UserRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserFollowersResponse>, t: Throwable) {
+            override fun onFailure(call: Call<MutableList<UserResponse>>, t: Throwable) {
                 callback.onFailure(t.localizedMessage ?: "getUserFollowers failure")
             }
         })
     }
 
-    fun getUserFollowings(username: String, callback: UserFollowingsCallback) {
-        USER_SERVICE.getUserFollowings(username).enqueue(object : Callback<UserFollowingsResponse> {
+    fun getUserFollowings(username: String, callback: UserListCallback) {
+        USER_SERVICE.getUserFollowings(username).enqueue(object : Callback<MutableList<UserResponse>> {
             override fun onResponse(
-                call: Call<UserFollowingsResponse>,
-                response: Response<UserFollowingsResponse>
+                call: Call<MutableList<UserResponse>>,
+                response: Response<MutableList<UserResponse>>
             ) {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        if (response.body()?.followingList != null) {
-                            callback.onSuccess(response.body()?.followingList ?: mutableListOf())
-                        } else {
-                            callback.onFailure("response.body().followingList is null")
-                        }
+                        callback.onSuccess(response.body() ?: mutableListOf())
                     } else {
                         callback.onFailure("response.body() is null")
                     }
@@ -92,8 +82,8 @@ object UserRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserFollowingsResponse>, t: Throwable) {
-                callback.onFailure(t.localizedMessage ?: "getUserFollowings failure")
+            override fun onFailure(call: Call<MutableList<UserResponse>>, t: Throwable) {
+                callback.onFailure(t.localizedMessage ?: "getUserFollowers failure")
             }
 
         })

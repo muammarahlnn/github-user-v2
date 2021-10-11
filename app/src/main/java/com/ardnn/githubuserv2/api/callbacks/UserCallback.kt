@@ -1,8 +1,8 @@
 package com.ardnn.githubuserv2.api.callbacks
 
-import com.ardnn.githubuserv2.api.responses.UserResponse
+import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 
 interface UserCallback {
-    fun onSuccess(user: UserResponse)
+    fun onSuccess(userDetail: UserDetailResponse)
     fun onFailure(message: String)
 }

@@ -1,6 +1,6 @@
 package com.ardnn.githubuserv2.api.repositories
 
-import com.ardnn.githubuserv2.api.callbacks.SearchedUsersCallback
+import com.ardnn.githubuserv2.api.callbacks.UserListCallback
 import com.ardnn.githubuserv2.api.responses.SearchedUserResponse
 import com.ardnn.githubuserv2.api.services.SearchUserApiService
 import retrofit2.Call
@@ -18,7 +18,7 @@ object SearchedUsersRepository {
             .create(SearchUserApiService::class.java)
 
     // method to get searched users
-    fun getSearchedUsers(newText: String, callback: SearchedUsersCallback) {
+    fun getSearchedUsers(newText: String, callback: UserListCallback) {
         SEARCHED_USERS_SERVICE.getSearchedUsers(newText).enqueue(object :
             Callback<SearchedUserResponse> {
             override fun onResponse(
@@ -27,10 +27,10 @@ object SearchedUsersRepository {
             ) {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
-                        if (response.body()?.searchedUser != null) {
-                            callback.onSuccess(response.body()?.searchedUser ?: mutableListOf())
+                        if (response.body()?.searchedUserDetail != null) {
+                            callback.onSuccess(response.body()?.searchedUserDetail ?: mutableListOf())
                         } else {
-                            callback.onFailure("response.body().searchedUser is null")
+                            callback.onFailure("response.body().searchedUserDetail is null")
                         }
                     } else {
                         callback.onFailure("response.body() is null")

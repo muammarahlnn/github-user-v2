@@ -1,7 +1,6 @@
 package com.ardnn.githubuserv2.api.services
 
-import com.ardnn.githubuserv2.api.responses.UserFollowersResponse
-import com.ardnn.githubuserv2.api.responses.UserFollowingsResponse
+import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -12,17 +11,17 @@ interface UserApiServices {
     fun getUserDetail(
         @Path("username")
         username: String
-    ): Call<UserResponse>
+    ): Call<UserDetailResponse>
 
     @GET("{username}/followers")
     fun getUserFollowers(
         @Path("username")
         username: String
-    ): Call<UserFollowersResponse>
+    ): Call<MutableList<UserResponse>>
 
-    @GET("{username}/followings")
+    @GET("{username}/following")
     fun getUserFollowings(
         @Path("username")
         username: String
-    ): Call<UserFollowingsResponse>
+    ): Call<MutableList<UserResponse>>
 }

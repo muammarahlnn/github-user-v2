@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class SearchedUserResponse(
     @field:SerializedName("items")
-    val searchedUser: MutableList<UserResponse>
+    val searchedUserDetail: MutableList<UserResponse>
 )

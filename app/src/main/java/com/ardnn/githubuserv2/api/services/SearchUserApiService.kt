@@ -3,12 +3,12 @@ package com.ardnn.githubuserv2.api.services
 import com.ardnn.githubuserv2.api.responses.SearchedUserResponse
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface SearchUserApiService {
-    @GET("{username}")
+    @GET("users")
     fun getSearchedUsers(
-        @Path("username")
+        @Query("q")
         username: String
     ): Call<SearchedUserResponse>
 }
