@@ -44,6 +44,13 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
             setSearchedUsers(searchedUsers)
         })
 
+        // check if username field is not empty then remove the error
+        binding.etUsername.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrEmpty()) {
+                binding.inputLayoutUsername.error = null
+            }
+        }
+
         // show alert or not
         viewModel.isSearched.observe(viewLifecycleOwner, { isSearched ->
             if (isSearched) hideNotSearchedYetAlert()
@@ -54,12 +61,10 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
             showAlertUsersNotFound(isEmpty)
         })
 
-        // check if username field is not empty then remove the error
-        binding.etUsername.doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrEmpty()) {
-                binding.inputLayoutUsername.error = null
-            }
-        }
+        // show progressbar
+        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            showLoading(isLoading)
+        })
 
         // if search button clicked
         binding.inputLayoutUsername.setEndIconOnClickListener { view ->
@@ -105,6 +110,10 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
 
     private fun showAlertUsersNotFound(isEmpty: Boolean) {
         binding.tvAlertUsersNotFound.visibility = if (isEmpty) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun setSearchedUsers(searchedUsers: MutableList<UserResponse>) {
