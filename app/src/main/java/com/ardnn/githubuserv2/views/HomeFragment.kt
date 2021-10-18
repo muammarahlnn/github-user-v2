@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.adapters.SearchedUserAdapter
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.FragmentHomeBinding
@@ -38,8 +39,19 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
         val layoutManager = LinearLayoutManager(activity)
         binding.rvUser.layoutManager = layoutManager
 
+        // observe searched users
         viewModel.searchedUsers.observe(viewLifecycleOwner, { searchedUsers ->
             setSearchedUsers(searchedUsers)
+        })
+
+        // show alert or not
+        viewModel.isSearched.observe(viewLifecycleOwner, { isSearched ->
+            if (isSearched) hideNotSearchedYetAlert()
+        })
+
+        // show alert if list is empty
+        viewModel.isSearchedUsersEmpty.observe(viewLifecycleOwner, { isEmpty ->
+            showAlertUsersNotFound(isEmpty)
         })
 
         // check if username field is not empty then remove the error
@@ -72,16 +84,27 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
     }
 
     private fun btnSearchCLicked(view: View) {
+        // get query from edit text
         val searched = binding.etUsername.text.toString()
         if (searched.isEmpty()) {
             // set error to the input layout
-            binding.inputLayoutUsername.error = "Please fill this field"
+            binding.inputLayoutUsername.error = resources.getString(R.string.empty_field_alert)
         } else {
             // set recyclerview
             viewModel.setSearchedUsers(searched)
         }
+
+        // hide keyboard
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun hideNotSearchedYetAlert() {
+        binding.tvAlertNotSearchedYet.visibility = View.INVISIBLE
+    }
+
+    private fun showAlertUsersNotFound(isEmpty: Boolean) {
+        binding.tvAlertUsersNotFound.visibility = if (isEmpty) View.VISIBLE else View.INVISIBLE
     }
 
     private fun setSearchedUsers(searchedUsers: MutableList<UserResponse>) {
@@ -92,6 +115,5 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
     override fun itemClicked(user: UserResponse) {
         Toast.makeText(requireContext(), user.username, Toast.LENGTH_SHORT).show()
     }
-
 
 }

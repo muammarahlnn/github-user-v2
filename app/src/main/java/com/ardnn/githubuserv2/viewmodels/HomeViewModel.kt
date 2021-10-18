@@ -23,9 +23,19 @@ class HomeViewModel : ViewModel() {
     private val _searchedUsers = MutableLiveData<MutableList<UserResponse>>()
     val searchedUsers: LiveData<MutableList<UserResponse>> = _searchedUsers
 
+    private val _isSearched = MutableLiveData<Boolean>(false)
+    val isSearched: LiveData<Boolean> = _isSearched
+
+    private val _isSearchedUsersEmpty = MutableLiveData<Boolean>(false)
+    val isSearchedUsersEmpty: LiveData<Boolean> = _isSearchedUsersEmpty
+
     fun setSearchedUsers(searchedWords: String) {
         SearchedUsersRepository.getSearchedUsers(searchedWords, object : UserListCallback {
             override fun onSuccess(userList: MutableList<UserResponse>) {
+                if (_isSearched.value == false) {
+                    _isSearched.value = true
+                }
+                _isSearchedUsersEmpty.value = userList.isNullOrEmpty()
                 _searchedUsers.value = userList
             }
 

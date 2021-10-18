@@ -75,6 +75,37 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tvAlertNotSearchedYet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/not_search_yet"
+            android:layout_marginHorizontal="24dp"
+            android:textColor="@color/gray_primary"
+            android:textSize="21sp"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutUsername" />
+
+        <TextView
+            android:id="@+id/tvAlertUsersNotFound"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/users_not_found"
+            android:layout_marginHorizontal="24dp"
+            android:textColor="@color/gray_primary"
+            android:textSize="21sp"
+            android:textAlignment="center"
+            android:fontFamily="@font/roboto_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutUsername" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUser"
             android:layout_width="match_parent"

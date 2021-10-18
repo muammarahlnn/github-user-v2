@@ -3,4 +3,7 @@
     <string name="app_logo">App Logo</string>
     <string name="search_user">Search userDetail</string>
     <string name="username">Username</string>
+    <string name="not_search_yet">You haven\'t searched any users yet</string>
+    <string name="empty_field_alert">Please fill this field</string>
+    <string name="users_not_found">Users not found</string>
 </resources>
