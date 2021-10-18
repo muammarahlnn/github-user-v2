@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/roboto_regular"
         android:lines="1"
-        android:textColor="@color/white_smoke"
+        android:textColor="@color/gray_primary"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivAva"
