@@ -7,14 +7,14 @@
     android:layout_height="match_parent"
     android:background="@color/black_background"
     android:fillViewport="true"
-    tools:context=".HomeFragment">
+    tools:context=".views.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_main"
+            android:id="@+id/toolbarMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black_primary"
@@ -42,7 +42,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/inputLayoutUsername"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,23 +50,33 @@
             android:layout_marginTop="16dp"
             android:hint="@string/username"
             android:textColorHint="@color/gray_primary"
-            app:hintTextColor="@color/gray_primary"
             app:boxStrokeColor="@color/gray_primary"
+            app:hintTextColor="@color/gray_primary"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_search_white"
+            app:endIconTint="@color/gray_primary"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@drawable/ic_error_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_main"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarMain"
             app:startIconDrawable="@drawable/ic_person_white"
             app:startIconTint="@color/gray_primary">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:lines="1"
                 android:textColor="@color/gray_primary"
-                android:textCursorDrawable="@null"/>
+                android:textCursorDrawable="@null"
+                android:imeOptions="actionSearch"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -75,7 +85,7 @@
             tools:itemCount="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/inputLayoutUsername" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

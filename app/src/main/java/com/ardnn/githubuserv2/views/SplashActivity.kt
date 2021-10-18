@@ -1,10 +1,11 @@
-package com.ardnn.githubuserv2
+package com.ardnn.githubuserv2.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import com.ardnn.githubuserv2.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2
+package com.ardnn.githubuserv2.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -23,7 +23,7 @@ class HomeViewModel : ViewModel() {
     private val _searchedUsers = MutableLiveData<MutableList<UserResponse>>()
     val searchedUsers: LiveData<MutableList<UserResponse>> = _searchedUsers
 
-    fun getSearchedUsers(searchedWords: String) {
+    fun setSearchedUsers(searchedWords: String) {
         SearchedUsersRepository.getSearchedUsers(searchedWords, object : UserListCallback {
             override fun onSuccess(userList: MutableList<UserResponse>) {
                 _searchedUsers.value = userList
