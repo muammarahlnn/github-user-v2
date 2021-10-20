@@ -34,6 +34,11 @@ class UserDetailFragment : Fragment() {
             setUserDetailToWidgets(user)
         })
 
+        // show progressbar
+        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            showLoading(isLoading)
+        })
+
         return binding.root
     }
 
@@ -50,7 +55,23 @@ class UserDetailFragment : Fragment() {
             tvName.text = user.name ?: "-"
             tvLocation.text = user.location ?: "-"
             tvCompany.text = user.company ?: "-"
-            tvRepositories.text = user.repositories.toString()
+            tvRepositories.text = (user.repositories ?: 0).toString()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with (binding) {
+            if (isLoading) {
+                progressBar.visibility = View.VISIBLE
+                ivLocation.visibility = View.INVISIBLE
+                ivCompany.visibility = View.INVISIBLE
+                ivRepositories.visibility = View.INVISIBLE
+            } else {
+                progressBar.visibility = View.GONE
+                ivLocation.visibility = View.VISIBLE
+                ivCompany.visibility = View.VISIBLE
+                ivRepositories.visibility = View.VISIBLE
+            }
         }
     }
 
