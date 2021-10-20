@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2.adapters
+package com.ardnn.githubuserv2.views
 
 import android.view.LayoutInflater
 import android.view.View

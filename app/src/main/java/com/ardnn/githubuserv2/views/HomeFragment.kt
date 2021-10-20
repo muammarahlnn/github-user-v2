@@ -2,21 +2,21 @@ package com.ardnn.githubuserv2.views
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.githubuserv2.R
-import com.ardnn.githubuserv2.adapters.SearchedUserAdapter
+import com.ardnn.githubuserv2.views.SearchedUserAdapter
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.FragmentHomeBinding
 import com.ardnn.githubuserv2.viewmodels.HomeViewModel
@@ -98,7 +98,7 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
             // set recyclerview
             viewModel.setSearchedUsers(searched)
         }
-
+1
         // hide keyboard
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
@@ -122,7 +122,9 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
     }
 
     override fun itemClicked(user: UserResponse) {
-        Toast.makeText(requireContext(), user.username, Toast.LENGTH_SHORT).show()
+        val toUserDetail = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment()
+        toUserDetail.username = user.username
+        findNavController().navigate(toUserDetail)
     }
 
 }

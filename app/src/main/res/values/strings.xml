@@ -6,4 +6,11 @@
     <string name="not_search_yet">You haven\'t searched any users yet</string>
     <string name="empty_field_alert">Please fill this field</string>
     <string name="users_not_found">Users not found</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_back">Button back</string>
+    <string name="detail_user">Detail User</string>
+    <string name="count_followers">%1$d followers</string>
+    <string name="count_following">%1$d following</string>
+
 </resources>
