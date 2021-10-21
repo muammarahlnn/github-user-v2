@@ -19,6 +19,7 @@ import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.views.SearchedUserAdapter
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.FragmentHomeBinding
+import com.ardnn.githubuserv2.utils.Helper
 import com.ardnn.githubuserv2.viewmodels.HomeViewModel
 import com.google.android.material.textfield.TextInputEditText
 
@@ -63,7 +64,7 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
 
         // show progressbar
         viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-            showLoading(isLoading)
+            Helper.showLoading(binding.progressBar, isLoading)
         })
 
         // if search button clicked
@@ -98,7 +99,7 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
             // set recyclerview
             viewModel.setSearchedUsers(searched)
         }
-1
+
         // hide keyboard
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
@@ -110,10 +111,6 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
 
     private fun showAlertUsersNotFound(isEmpty: Boolean) {
         binding.tvAlertUsersNotFound.visibility = if (isEmpty) View.VISIBLE else View.INVISIBLE
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun setSearchedUsers(searchedUsers: MutableList<UserResponse>) {
