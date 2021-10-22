@@ -10,7 +10,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_back">Button back</string>
     <string name="detail_user">Detail User</string>
-    <string name="count_followers">%1$d followers</string>
-    <string name="count_following">%1$d following</string>
+
+    <string-array name="user_foll_tab_text">
+        <item>%1$d followers</item>
+        <item>%1$d following</item>
+    </string-array>
 
 </resources>

@@ -10,8 +10,10 @@ import androidx.navigation.findNavController
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 import com.ardnn.githubuserv2.databinding.FragmentUserDetailBinding
+import com.ardnn.githubuserv2.utils.Helper
 import com.ardnn.githubuserv2.viewmodels.UserDetailViewModel
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailFragment : Fragment() {
 
@@ -39,6 +41,17 @@ class UserDetailFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
             showLoading(isLoading)
         })
+
+        // set viewpager
+        val userFollPagerAdapter = UserFollPagerAdapter(requireActivity())
+        binding.vp2.adapter = userFollPagerAdapter
+
+        // set tab layout
+        val countFolls = intArrayOf(21, 12)
+        TabLayoutMediator(binding.tabLayout, binding.vp2) { tab, pos ->
+            tab.text = String.format(resources.getStringArray(R.array.user_foll_tab_text)[pos], countFolls[pos])
+        }.attach()
+        Helper.equalingEachTabWidth(binding.tabLayout)
 
         // if button clicked
         binding.btnBack.setOnClickListener {
