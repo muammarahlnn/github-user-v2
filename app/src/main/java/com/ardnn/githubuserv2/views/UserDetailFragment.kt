@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 import com.ardnn.githubuserv2.databinding.FragmentUserDetailBinding
@@ -38,6 +39,11 @@ class UserDetailFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
             showLoading(isLoading)
         })
+
+        // if button clicked
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
         return binding.root
     }
