@@ -26,6 +26,9 @@ class UserFollViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isListEmpty = MutableLiveData(false)
+    val isListEmpty: LiveData<Boolean> = _isListEmpty
+
     init {
         when (section) {
             0 -> { // followers
@@ -47,6 +50,9 @@ class UserFollViewModel(
                 _isLoading.value = false
 
                 _followerList.value = userList
+                if (userList.isNullOrEmpty()) {
+                    _isListEmpty.value = true
+                }
             }
 
             override fun onFailure(message: String) {
@@ -66,6 +72,9 @@ class UserFollViewModel(
                 _isLoading.value = false
 
                 _followingList.value = userList
+                if (userList.isNullOrEmpty()) {
+                    _isListEmpty.value = true
+                }
             }
 
             override fun onFailure(message: String) {

@@ -19,14 +19,31 @@
             tools:listitem="@layout/item_user_foll"
             tools:itemCount="5"/>
 
+        <TextView
+            android:id="@+id/tvAlert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="24dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/no_users_found"
+            android:textAlignment="center"
+            android:textColor="@color/gray_primary"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="24dp"
             android:indeterminate="true"
             android:indeterminateTint="@color/gray_primary"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

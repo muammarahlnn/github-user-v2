@@ -62,6 +62,11 @@ class UserFollFragment : Fragment(), ClickListener {
             Helper.showLoading(binding.progressBar, isLoading)
         })
 
+        // show alert if list is empty
+        viewModel.isListEmpty.observe(viewLifecycleOwner, { isListEmpty ->
+            showAlert(isListEmpty)
+        })
+
         return binding.root
     }
 
@@ -97,6 +102,10 @@ class UserFollFragment : Fragment(), ClickListener {
     private fun setUserFoll(userFollList: MutableList<UserResponse>) {
         val adapter = UserFollAdapter(userFollList, this)
         binding.rvUserFoll.adapter = adapter
+    }
+
+    private fun showAlert(isListEmpty: Boolean) {
+        binding.tvAlert.visibility = if (isListEmpty) View.VISIBLE else View.INVISIBLE
     }
 
     override fun onItemClicked(user: UserResponse) {
