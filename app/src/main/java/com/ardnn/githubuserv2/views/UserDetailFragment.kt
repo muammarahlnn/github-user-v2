@@ -18,13 +18,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailFragment : Fragment() {
 
-    companion object {
-        val TAB_TITLES = intArrayOf(
-            R.string.followers,
-            R.string.following
-        )
-    }
-
     private lateinit var viewModel: UserDetailViewModel
     private var _binding: FragmentUserDetailBinding? = null
     private val binding get() = _binding!!
@@ -68,12 +61,6 @@ class UserDetailFragment : Fragment() {
             }
         })
 
-        // set tab layout
-        TabLayoutMediator(binding.tabLayout, binding.vp2) { tab, pos ->
-            tab.text = resources.getString(TAB_TITLES[pos])
-        }.attach()
-        Helper.equalingEachTabWidth(binding.tabLayout)
-
         // if button clicked
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressed()
@@ -96,6 +83,16 @@ class UserDetailFragment : Fragment() {
             tvLocation.text = user.location ?: "-"
             tvCompany.text = user.company ?: "-"
             tvRepositories.text = (user.repositories ?: 0).toString()
+
+            // set tab layout
+            val countFolls = intArrayOf(
+                user.followers ?: 0,
+                user.following ?: 0
+            )
+            TabLayoutMediator(tabLayout, vp2) { tab, pos ->
+                tab.text = String.format(resources.getStringArray(R.array.user_foll_tab_text)[pos], countFolls[pos])
+            }.attach()
+            Helper.equalingEachTabWidth(tabLayout)
         }
     }
 

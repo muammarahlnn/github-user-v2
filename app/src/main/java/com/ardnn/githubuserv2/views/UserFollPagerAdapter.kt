@@ -15,7 +15,7 @@ class UserFollPagerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return UserDetailFragment.TAB_TITLES.size
+        return fragmentActivity.resources.getStringArray(R.array.user_foll_tab_text).size
     }
 
 }
