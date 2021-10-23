@@ -17,6 +17,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailFragment : Fragment() {
 
+    companion object {
+        val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
+    }
+
     private lateinit var viewModel: UserDetailViewModel
     private var _binding: FragmentUserDetailBinding? = null
     private val binding get() = _binding!!
@@ -43,13 +50,12 @@ class UserDetailFragment : Fragment() {
         })
 
         // set viewpager
-        val userFollPagerAdapter = UserFollPagerAdapter(requireActivity())
+        val userFollPagerAdapter = UserFollPagerAdapter(requireActivity(), username)
         binding.vp2.adapter = userFollPagerAdapter
 
         // set tab layout
-        val countFolls = intArrayOf(21, 12)
         TabLayoutMediator(binding.tabLayout, binding.vp2) { tab, pos ->
-            tab.text = String.format(resources.getStringArray(R.array.user_foll_tab_text)[pos], countFolls[pos])
+            tab.text = resources.getString(TAB_TITLES[pos])
         }.attach()
         Helper.equalingEachTabWidth(binding.tabLayout)
 

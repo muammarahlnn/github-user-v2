@@ -14,12 +14,6 @@ class HomeViewModel : ViewModel() {
         private val TAG = HomeViewModel::class.java.simpleName
     }
 
-    private val _followerList = MutableLiveData<MutableList<UserResponse>>()
-    val followerList: LiveData<MutableList<UserResponse>> = _followerList
-
-    private val _followingList = MutableLiveData<MutableList<UserResponse>>()
-    val followingList: LiveData<MutableList<UserResponse>> = _followingList
-
     private val _searchedUsers = MutableLiveData<MutableList<UserResponse>>()
     val searchedUsers: LiveData<MutableList<UserResponse>> = _searchedUsers
 
@@ -58,29 +52,4 @@ class HomeViewModel : ViewModel() {
         })
     }
 
-    fun getUserFollowers(username: String) {
-        UserRepository.getUserFollowers(username, object : UserListCallback {
-            override fun onSuccess(userList: MutableList<UserResponse>) {
-                _followerList.value = userList
-            }
-
-            override fun onFailure(message: String) {
-                Log.d(TAG, message)
-            }
-
-        })
-    }
-
-    fun getUserFollowings(username: String) {
-        UserRepository.getUserFollowings(username, object : UserListCallback {
-            override fun onSuccess(userList: MutableList<UserResponse>) {
-                _followingList.value = userList
-            }
-
-            override fun onFailure(message: String) {
-                Log.d(TAG, message)
-            }
-
-        })
-    }
 }

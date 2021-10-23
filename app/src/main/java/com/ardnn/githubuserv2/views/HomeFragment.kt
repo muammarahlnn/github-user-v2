@@ -8,22 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.githubuserv2.R
-import com.ardnn.githubuserv2.views.SearchedUserAdapter
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.FragmentHomeBinding
+import com.ardnn.githubuserv2.listeners.ClickListener
 import com.ardnn.githubuserv2.utils.Helper
 import com.ardnn.githubuserv2.viewmodels.HomeViewModel
-import com.google.android.material.textfield.TextInputEditText
 
-class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
+class HomeFragment : Fragment(), ClickListener {
 
     private lateinit var viewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -96,7 +92,7 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
             // set error to the input layout
             binding.inputLayoutUsername.error = resources.getString(R.string.empty_field_alert)
         } else {
-            // set recyclerview
+            // set searched users
             viewModel.setSearchedUsers(searched)
         }
 
@@ -118,7 +114,7 @@ class HomeFragment : Fragment(), SearchedUserAdapter.ClickListener {
         binding.rvUser.adapter = adapter
     }
 
-    override fun itemClicked(user: UserResponse) {
+    override fun onItemClicked(user: UserResponse) {
         val toUserDetail = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment()
         toUserDetail.username = user.username
         findNavController().navigate(toUserDetail)

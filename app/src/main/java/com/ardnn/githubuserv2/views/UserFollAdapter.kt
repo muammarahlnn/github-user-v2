@@ -6,17 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserResponse
-import com.ardnn.githubuserv2.databinding.ItemUserBinding
+import com.ardnn.githubuserv2.databinding.ItemUserFollBinding
 import com.ardnn.githubuserv2.listeners.ClickListener
 import com.bumptech.glide.Glide
 
-class SearchedUserAdapter(
+class UserFollAdapter(
     private val userList: MutableList<UserResponse>,
     private val clickListener: ClickListener
-) : RecyclerView.Adapter<SearchedUserAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<UserFollAdapter.ViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_user, parent, false)
+            .inflate(R.layout.item_user_foll, parent, false)
 
         return ViewHolder(view)
     }
@@ -29,9 +30,8 @@ class SearchedUserAdapter(
         return userList.size
     }
 
-    inner class ViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemUserBinding.bind(itemView)
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemUserFollBinding.bind(itemView)
 
         init {
             itemView.setOnClickListener {
@@ -41,10 +41,11 @@ class SearchedUserAdapter(
 
         internal fun onBind(user: UserResponse) {
             with (binding) {
-                tvUsername.text = user.username
                 Glide.with(itemView.context).load(user.avatarUrl)
                     .into(ivAva)
+                tvUsername.text = user.username
             }
         }
     }
+
 }
