@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 import com.ardnn.githubuserv2.databinding.FragmentUserDetailBinding
@@ -52,6 +53,20 @@ class UserDetailFragment : Fragment() {
         // set viewpager
         val userFollPagerAdapter = UserFollPagerAdapter(requireActivity(), username)
         binding.vp2.adapter = userFollPagerAdapter
+
+        // make view pager's height flexible
+        binding.vp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                if (position > 0 && positionOffset == 0.0F && positionOffsetPixels == 0) {
+                    binding.vp2.layoutParams.height = binding.vp2.getChildAt(0).height
+                }
+            }
+        })
 
         // set tab layout
         TabLayoutMediator(binding.tabLayout, binding.vp2) { tab, pos ->
