@@ -75,14 +75,12 @@ class UserFollFragment : Fragment(), ClickListener {
         _binding  = null
     }
 
-    /*
-        another way to make view pager's height flexible, but it's not smooth enough
-        so i keep it here in case i need it in the future
-        override fun onResume() {
-            super.onResume()
-            binding.root.requestLayout()
-        }
-     */
+    override fun onResume() {
+        super.onResume()
+
+        // to make view pager's height flexible
+        binding.root.requestLayout()
+    }
 
     private fun fetchUserFoll(section: Int) {
         when (section) {

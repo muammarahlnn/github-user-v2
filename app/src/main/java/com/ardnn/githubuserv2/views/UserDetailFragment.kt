@@ -47,20 +47,6 @@ class UserDetailFragment : Fragment() {
         val userFollPagerAdapter = UserFollPagerAdapter(requireActivity(), username)
         binding.vp2.adapter = userFollPagerAdapter
 
-        // make view pager's height flexible
-        binding.vp2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if (position > 0 && positionOffset == 0.0F && positionOffsetPixels == 0) {
-                    binding.vp2.layoutParams.height = binding.vp2.getChildAt(0).height
-                }
-            }
-        })
-
         // if button clicked
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressed()
