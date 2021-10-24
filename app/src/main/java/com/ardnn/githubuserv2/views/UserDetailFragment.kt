@@ -62,8 +62,7 @@ class UserDetailFragment : Fragment() {
 
     private fun setUserDetailToWidgets(user: UserDetailResponse) {
         with (binding) {
-            Glide.with(requireContext()).load(user.avatarUrl)
-                .into(ivAva)
+            Helper.setImageGlide(requireContext(), user.avatarUrl, ivAva)
             tvUsername.text = user.username
             tvName.text = user.name ?: "-"
             tvLocation.text = user.location ?: "-"

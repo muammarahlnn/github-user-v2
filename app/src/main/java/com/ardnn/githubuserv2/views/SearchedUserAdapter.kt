@@ -8,6 +8,7 @@ import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.ItemUserBinding
 import com.ardnn.githubuserv2.listeners.ClickListener
+import com.ardnn.githubuserv2.utils.Helper
 import com.bumptech.glide.Glide
 
 class SearchedUserAdapter(
@@ -41,9 +42,8 @@ class SearchedUserAdapter(
 
         internal fun onBind(user: UserResponse) {
             with (binding) {
+                Helper.setImageGlide(itemView.context, user.avatarUrl, ivAva)
                 tvUsername.text = user.username
-                Glide.with(itemView.context).load(user.avatarUrl)
-                    .into(ivAva)
             }
         }
     }

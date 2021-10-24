@@ -8,6 +8,7 @@ import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.ItemUserFollBinding
 import com.ardnn.githubuserv2.listeners.ClickListener
+import com.ardnn.githubuserv2.utils.Helper
 import com.bumptech.glide.Glide
 
 class UserFollAdapter(
@@ -41,8 +42,7 @@ class UserFollAdapter(
 
         internal fun onBind(user: UserResponse) {
             with (binding) {
-                Glide.with(itemView.context).load(user.avatarUrl)
-                    .into(ivAva)
+                Helper.setImageGlide(itemView.context, user.avatarUrl, ivAva)
                 tvUsername.text = user.username
             }
         }
