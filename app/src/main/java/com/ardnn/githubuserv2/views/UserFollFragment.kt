@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserResponse
@@ -82,9 +80,7 @@ class UserFollFragment : Fragment(), ClickListener {
 
     override fun onResume() {
         super.onResume()
-
-        // to make view pager's height flexible
-        binding.root.requestLayout()
+        binding.root.requestLayout()  // to make view pager's height flexible
     }
 
     private fun fetchUserFoll(section: Int) {
@@ -119,6 +115,8 @@ class UserFollFragment : Fragment(), ClickListener {
     }
 
     override fun onItemClicked(user: UserResponse) {
-        Toast.makeText(requireContext(), user.username, Toast.LENGTH_SHORT).show()
+        val toUserDetail = UserDetailFragmentDirections.actionUserDetailFragmentSelf()
+        toUserDetail.username = user.username
+        findNavController().navigate(toUserDetail)
     }
 }
