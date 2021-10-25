@@ -26,26 +26,25 @@ class HomeViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isFailure = MutableLiveData<Boolean>()
+    val isFailure: LiveData<Boolean> = _isFailure
+
     fun setSearchedUsers(searchedWords: String) {
-        // first search
-        _isSearched.value = true
-
-        // show progressbar
-        _isLoading.value = true
-
-        // make it false so the alert text gonna be invisible everytime we searching
-        _isSearchedUsersEmpty.value = false
+        _isSearched.value = true // first searching
+        _isLoading.value = true // show loading
+        _isSearchedUsersEmpty.value = false // make it false so the alert text gonna be invisible everytime we searching
         SearchedUsersRepository.getSearchedUsers(searchedWords, object : UserListCallback {
             override fun onSuccess(userList: MutableList<UserResponse>) {
-                // hide progressbar
-                _isLoading.value = false
+                _isLoading.value = false // hide loading
+                _isFailure.value = false // success fetch data
+                _isSearchedUsersEmpty.value = userList.isNullOrEmpty() // check is list empty or not
 
-                _isSearchedUsersEmpty.value = userList.isNullOrEmpty()
                 _searchedUsers.value = userList
             }
 
             override fun onFailure(message: String) {
-                _isLoading.value = false
+                _isLoading.value = false // hide loading
+                _isFailure.value = true // unable to fetch data
                 Log.d(TAG, message)
             }
 

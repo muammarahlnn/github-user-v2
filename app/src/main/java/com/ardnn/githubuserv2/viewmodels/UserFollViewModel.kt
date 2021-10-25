@@ -29,6 +29,9 @@ class UserFollViewModel(
     private val _isListEmpty = MutableLiveData(false)
     val isListEmpty: LiveData<Boolean> = _isListEmpty
 
+    private val _isFailure = MutableLiveData<Boolean>()
+    val isFailure: LiveData<Boolean> = _isFailure
+
     init {
         when (section) {
             0 -> { // followers
@@ -63,13 +66,11 @@ class UserFollViewModel(
     }
 
     private fun setUserFollowings(username: String) {
-        // show progressbar
-        _isLoading.value = true
-
+        _isLoading.value = true // show progressbar
         UserRepository.getUserFollowings(username, object : UserListCallback {
             override fun onSuccess(userList: MutableList<UserResponse>) {
-                // hide progressbar
-                _isLoading.value = false
+                _isLoading.value = false // hide progressbar
+                _isFailure.value = false // success fetch data
 
                 _followingList.value = userList
                 if (userList.isNullOrEmpty()) {
@@ -78,6 +79,8 @@ class UserFollViewModel(
             }
 
             override fun onFailure(message: String) {
+                _isLoading.value = false // hide progressbar
+                _isFailure.value = true // unable to fetch data
                 Log.d(TAG, message)
             }
 

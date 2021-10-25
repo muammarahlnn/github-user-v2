@@ -64,7 +64,12 @@ class UserFollFragment : Fragment(), ClickListener {
 
         // show alert if list is empty
         viewModel.isListEmpty.observe(viewLifecycleOwner, { isListEmpty ->
-            showAlert(isListEmpty)
+            showAlert(isListEmpty, resources.getString(R.string.no_users_found))
+        })
+
+        // show alert if unable to retrieve data
+        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
+            showAlert(isFailure, resources.getString(R.string.unable_to_retrieve_data))
         })
 
         return binding.root
@@ -102,8 +107,15 @@ class UserFollFragment : Fragment(), ClickListener {
         binding.rvUserFoll.adapter = adapter
     }
 
-    private fun showAlert(isListEmpty: Boolean) {
-        binding.tvAlert.visibility = if (isListEmpty) View.VISIBLE else View.INVISIBLE
+    private fun showAlert(isShow: Boolean, text: String) {
+        with (binding) {
+            if (isShow) {
+                tvAlert.text = text
+                tvAlert.visibility = View.VISIBLE
+            } else {
+                tvAlert.visibility = View.INVISIBLE
+            }
+        }
     }
 
     override fun onItemClicked(user: UserResponse) {

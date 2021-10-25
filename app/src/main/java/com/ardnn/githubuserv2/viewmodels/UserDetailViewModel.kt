@@ -19,18 +19,21 @@ class UserDetailViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isFailure = MutableLiveData<Boolean>()
+    val isFailure: LiveData<Boolean> = _isFailure
+
     fun fetchUserDetail(username: String) {
         // show progressbar
         _isLoading.value = true
         UserRepository.getUserDetail(username, object : UserCallback {
             override fun onSuccess(userDetail: UserDetailResponse) {
-                // hide progressbar
-                _isLoading.value = false
-
+                _isLoading.value = false // hide progressbar
+                _isFailure.value = false // success fetch data
                 _user.value = userDetail
             }
 
             override fun onFailure(message: String) {
+                _isFailure.value = true // unable to fetch data
                 Log.d(TAG, message)
             }
 

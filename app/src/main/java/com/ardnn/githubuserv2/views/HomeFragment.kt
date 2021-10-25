@@ -48,14 +48,19 @@ class HomeFragment : Fragment(), ClickListener {
             }
         }
 
-        // show alert or not
+        // check whether user has searched or not
         viewModel.isSearched.observe(viewLifecycleOwner, { isSearched ->
             if (isSearched) hideNotSearchedYetAlert()
         })
 
         // show alert if list is empty
         viewModel.isSearchedUsersEmpty.observe(viewLifecycleOwner, { isEmpty ->
-            showAlertUsersNotFound(isEmpty)
+            showAlert(isEmpty, resources.getString(R.string.users_not_found))
+        })
+
+        // show alert if unable to retrieve data
+        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
+            showAlert(isFailure, resources.getString(R.string.unable_to_retrieve_data))
         })
 
         // show progressbar
@@ -101,12 +106,21 @@ class HomeFragment : Fragment(), ClickListener {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun hideNotSearchedYetAlert() {
-        binding.tvAlertNotSearchedYet.visibility = View.INVISIBLE
+    private fun showAlert(isShow: Boolean, text: String) {
+        with (binding) {
+            // show alert and make recyclerview empty
+            if (isShow) {
+                tvAlert.text = text
+                tvAlert.visibility = View.VISIBLE
+                rvUser.adapter = null
+            } else {
+                tvAlert.visibility = View.INVISIBLE
+            }
+        }
     }
 
-    private fun showAlertUsersNotFound(isEmpty: Boolean) {
-        binding.tvAlertUsersNotFound.visibility = if (isEmpty) View.VISIBLE else View.INVISIBLE
+    private fun hideNotSearchedYetAlert() {
+        binding.tvAlertNotSearchedYet.visibility = View.INVISIBLE
     }
 
     private fun setSearchedUsers(searchedUsers: MutableList<UserResponse>) {

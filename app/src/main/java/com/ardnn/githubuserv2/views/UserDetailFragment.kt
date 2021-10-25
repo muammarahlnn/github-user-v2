@@ -43,6 +43,11 @@ class UserDetailFragment : Fragment() {
             showLoading(isLoading)
         })
 
+        // show alert if unable to retrieve data
+        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
+            showAlert(isFailure)
+        })
+
         // set viewpager
         val userFollPagerAdapter = UserFollPagerAdapter(requireActivity(), username)
         binding.vp2.adapter = userFollPagerAdapter
@@ -95,6 +100,10 @@ class UserDetailFragment : Fragment() {
                 ivRepositories.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun showAlert(isFailure: Boolean) {
+        binding.clAlert.visibility = if (isFailure) View.VISIBLE else View.GONE
     }
 
 }
