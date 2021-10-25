@@ -39,6 +39,15 @@
                 android:textSize="20sp"
                 android:fontFamily="@font/roboto_medium" />
 
+            <ImageView
+                android:id="@+id/btnHome"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/ic_home_white"
+                android:contentDescription="@string/button_home" />
+
         </androidx.appcompat.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -92,7 +101,8 @@
             android:layout_marginStart="48dp"
             android:src="@drawable/ic_location"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+            android:contentDescription="@string/icon_location" />
 
         <TextView
             android:id="@+id/tvLocation"
@@ -116,6 +126,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="12dp"
             android:src="@drawable/ic_company"
+            android:contentDescription="@string/icon_company"
             app:layout_constraintStart_toStartOf="@+id/ivLocation"
             app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
 

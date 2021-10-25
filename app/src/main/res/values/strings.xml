@@ -16,6 +16,9 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="no_users_found">No users found</string>
+    <string name="button_home">Button home</string>
+    <string name="icon_location">Icon location</string>
+    <string name="icon_company">Icon company</string>
 
     <string-array name="user_foll_tab_text">
         <item>%1$d followers</item>

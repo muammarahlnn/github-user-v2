@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserDetailResponse
@@ -55,6 +56,9 @@ class UserDetailFragment : Fragment() {
         // if button clicked
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressed()
+        }
+        binding.btnHome.setOnClickListener {
+            findNavController().navigate(R.id.action_userDetailFragment_to_homeFragment)
         }
 
         return binding.root
