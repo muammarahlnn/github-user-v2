@@ -49,8 +49,8 @@ class UserFollViewModel(
 
         UserRepository.getUserFollowers(username, object : UserListCallback {
             override fun onSuccess(userList: MutableList<UserResponse>) {
-                // hide progressbar
-                _isLoading.value = false
+                _isLoading.value = false // hide progressbar
+                _isFailure.value = false // success fetch data
 
                 _followerList.value = userList
                 if (userList.isNullOrEmpty()) {
@@ -59,6 +59,8 @@ class UserFollViewModel(
             }
 
             override fun onFailure(message: String) {
+                _isLoading.value = false // hide progressbar
+                _isFailure.value = true // unable to fetch data
                 Log.d(TAG, message)
             }
 
