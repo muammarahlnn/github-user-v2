@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2.views
+package com.ardnn.githubuserv2.views.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.ardnn.githubuserv2.R
 import com.ardnn.githubuserv2.api.responses.UserDetailResponse
 import com.ardnn.githubuserv2.databinding.FragmentUserDetailBinding
 import com.ardnn.githubuserv2.utils.Helper
 import com.ardnn.githubuserv2.viewmodels.UserDetailViewModel
-import com.bumptech.glide.Glide
+import com.ardnn.githubuserv2.views.adapters.UserFollPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class UserDetailFragment : Fragment() {
@@ -33,21 +31,8 @@ class UserDetailFragment : Fragment() {
         // get args
         val username: String = UserDetailFragmentArgs.fromBundle(arguments as Bundle).username
 
-        // fetch user detail
-        viewModel.fetchUserDetail(username)
-        viewModel.user.observe(viewLifecycleOwner, { user ->
-            setUserDetailToWidgets(user)
-        })
-
-        // show progressbar
-        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-            showLoading(isLoading)
-        })
-
-        // show alert if unable to retrieve data
-        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
-            showAlert(isFailure)
-        })
+        // subscribe view model
+        subscribe(username)
 
         // set viewpager
         val userFollPagerAdapter = UserFollPagerAdapter(requireActivity(), username)
@@ -67,6 +52,24 @@ class UserDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun subscribe(username: String) {
+        // fetch user detail
+        viewModel.fetchUserDetail(username)
+        viewModel.user.observe(viewLifecycleOwner, { user ->
+            setUserDetailToWidgets(user)
+        })
+
+        // show progressbar
+        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            showLoading(isLoading)
+        })
+
+        // show alert if unable to retrieve data
+        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
+            showAlert(isFailure)
+        })
     }
 
     private fun setUserDetailToWidgets(user: UserDetailResponse) {

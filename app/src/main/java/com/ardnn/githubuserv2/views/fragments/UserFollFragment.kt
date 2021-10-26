@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2.views
+package com.ardnn.githubuserv2.views.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +15,7 @@ import com.ardnn.githubuserv2.listeners.ClickListener
 import com.ardnn.githubuserv2.utils.Helper
 import com.ardnn.githubuserv2.viewmodels.UserFollViewModel
 import com.ardnn.githubuserv2.viewmodels.UserFollViewModelFactory
+import com.ardnn.githubuserv2.views.adapters.UserFollAdapter
 
 class UserFollFragment : Fragment(), ClickListener {
 
@@ -46,13 +47,30 @@ class UserFollFragment : Fragment(), ClickListener {
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvUserFoll.layoutManager = layoutManager
 
-        // get args
+        // get args and set it as parameters on view model
         val section: Int = arguments?.getInt(ARG_SECTION_NUMBER, 0) ?: 0
         val username: String = arguments?.getString(ARG_USERNAME, "") ?: ""
-
-        // fetch user foll depends on its section number
         viewModel = ViewModelProvider(this, UserFollViewModelFactory(section, username))
             .get(UserFollViewModel::class.java)
+
+        // subscribe view model
+        subscribe(section, username)
+
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding  = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()  // to make view pager's height flexible
+    }
+
+    private fun subscribe(section: Int, username: String) {
+        // fetch user foll depends on its section number
         fetchUserFoll(section)
 
         // show progressbar
@@ -69,18 +87,6 @@ class UserFollFragment : Fragment(), ClickListener {
         viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
             showAlert(isFailure, resources.getString(R.string.unable_to_retrieve_data))
         })
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding  = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.root.requestLayout()  // to make view pager's height flexible
     }
 
     private fun fetchUserFoll(section: Int) {

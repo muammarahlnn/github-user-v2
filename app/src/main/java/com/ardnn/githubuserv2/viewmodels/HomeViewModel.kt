@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ardnn.githubuserv2.api.callbacks.UserListCallback
 import com.ardnn.githubuserv2.api.repositories.SearchedUsersRepository
-import com.ardnn.githubuserv2.api.repositories.UserRepository
 import com.ardnn.githubuserv2.api.responses.UserResponse
 
 class HomeViewModel : ViewModel() {

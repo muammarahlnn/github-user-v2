@@ -1,9 +1,10 @@
-package com.ardnn.githubuserv2.views
+package com.ardnn.githubuserv2.views.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ardnn.githubuserv2.R
+import com.ardnn.githubuserv2.views.fragments.UserFollFragment
 
 class UserFollPagerAdapter(
     private val fragmentActivity: FragmentActivity,

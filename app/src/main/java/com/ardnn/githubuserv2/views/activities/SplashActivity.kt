@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2.views
+package com.ardnn.githubuserv2.views.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

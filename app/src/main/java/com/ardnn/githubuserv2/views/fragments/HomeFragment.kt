@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2.views
+package com.ardnn.githubuserv2.views.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -18,6 +18,7 @@ import com.ardnn.githubuserv2.databinding.FragmentHomeBinding
 import com.ardnn.githubuserv2.listeners.ClickListener
 import com.ardnn.githubuserv2.utils.Helper
 import com.ardnn.githubuserv2.viewmodels.HomeViewModel
+import com.ardnn.githubuserv2.views.adapters.SearchedUserAdapter
 
 class HomeFragment : Fragment(), ClickListener {
 
@@ -36,10 +37,8 @@ class HomeFragment : Fragment(), ClickListener {
         val layoutManager = LinearLayoutManager(activity)
         binding.rvUser.layoutManager = layoutManager
 
-        // observe searched users
-        viewModel.searchedUsers.observe(viewLifecycleOwner, { searchedUsers ->
-            setSearchedUsers(searchedUsers)
-        })
+        // subscribe view model
+        subscribe()
 
         // check if username field is not empty then remove the error
         binding.etUsername.doOnTextChanged { text, _, _, _ ->
@@ -47,26 +46,6 @@ class HomeFragment : Fragment(), ClickListener {
                 binding.inputLayoutUsername.error = null
             }
         }
-
-        // check whether user has searched or not
-        viewModel.isSearched.observe(viewLifecycleOwner, { isSearched ->
-            if (isSearched) hideNotSearchedYetAlert()
-        })
-
-        // show alert if list is empty
-        viewModel.isSearchedUsersEmpty.observe(viewLifecycleOwner, { isEmpty ->
-            showAlert(isEmpty, resources.getString(R.string.users_not_found))
-        })
-
-        // show alert if unable to retrieve data
-        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
-            showAlert(isFailure, resources.getString(R.string.unable_to_retrieve_data))
-        })
-
-        // show progressbar
-        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-            Helper.showLoading(binding.progressBar, isLoading)
-        })
 
         // if search button clicked
         binding.inputLayoutUsername.setEndIconOnClickListener { view ->
@@ -89,6 +68,34 @@ class HomeFragment : Fragment(), ClickListener {
         super.onDestroy()
         _binding = null
     }
+
+    private fun subscribe() {
+        // observe searched users
+        viewModel.searchedUsers.observe(viewLifecycleOwner, { searchedUsers ->
+            setSearchedUsers(searchedUsers)
+        })
+
+        // check whether user has searched or not
+        viewModel.isSearched.observe(viewLifecycleOwner, { isSearched ->
+            if (isSearched) hideNotSearchedYetAlert()
+        })
+
+        // show alert if list is empty
+        viewModel.isSearchedUsersEmpty.observe(viewLifecycleOwner, { isEmpty ->
+            showAlert(isEmpty, resources.getString(R.string.users_not_found))
+        })
+
+        // show alert if unable to retrieve data
+        viewModel.isFailure.observe(viewLifecycleOwner, { isFailure ->
+            showAlert(isFailure, resources.getString(R.string.unable_to_retrieve_data))
+        })
+
+        // show progressbar
+        viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            Helper.showLoading(binding.progressBar, isLoading)
+        })
+    }
+
 
     private fun btnSearchCLicked(view: View) {
         // get query from edit text

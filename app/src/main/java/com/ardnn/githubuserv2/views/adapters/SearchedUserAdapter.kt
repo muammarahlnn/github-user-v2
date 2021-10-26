@@ -1,4 +1,4 @@
-package com.ardnn.githubuserv2.views
+package com.ardnn.githubuserv2.views.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import com.ardnn.githubuserv2.api.responses.UserResponse
 import com.ardnn.githubuserv2.databinding.ItemUserBinding
 import com.ardnn.githubuserv2.listeners.ClickListener
 import com.ardnn.githubuserv2.utils.Helper
-import com.bumptech.glide.Glide
 
 class SearchedUserAdapter(
     private val userList: MutableList<UserResponse>,
