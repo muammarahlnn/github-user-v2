@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ardnn.githubuserv2.views.fragments.HomeFragment"
+        android:name="com.ardnn.githubuserv2.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/userDetailFragment"
-        android:name="com.ardnn.githubuserv2.views.fragments.UserDetailFragment"
+        android:name="com.ardnn.githubuserv2.userdetail.UserDetailFragment"
         android:label="fragment_user_detail"
         tools:layout="@layout/fragment_user_detail" >
         <argument
